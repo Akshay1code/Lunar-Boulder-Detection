@@ -1,8 +1,17 @@
-# Core runtime dependencies for Lunar Landslide Segmentation Demo and Inference
-# Note: On CPU-only environments, install torch from the official CPU wheel index:
-# pip install torch --index-url https://download.pytorch.org/whl/cpu
+# Core deep learning & YOLO framework
+torch>=2.1.0
+torchvision>=0.16.0
+ultralytics>=8.3.0
 
-torch>=2.0.0
-numpy>=1.24.0
+# Computer vision & image processing
 opencv-python>=4.8.0
 pillow>=10.0.0
+
+# Data analysis & plotting
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+pyyaml>=6.0
+
+# Utilities
+requests>=2.31.0

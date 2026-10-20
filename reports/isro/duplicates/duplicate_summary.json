@@ -1,0 +1,11 @@
+{
+  "dataset_root": ".",
+  "images_scanned_successfully": 1707,
+  "unreadable_images": 0,
+  "exact_duplicate_pairs": 0,
+  "near_duplicate_candidate_pairs": 84,
+  "near_duplicate_threshold": 4,
+  "exact_cross_split_pairs": 0,
+  "near_cross_split_pairs": 1,
+  "note": "Near-duplicate pairs are candidates only. Inspect them before making any dataset changes."
+}

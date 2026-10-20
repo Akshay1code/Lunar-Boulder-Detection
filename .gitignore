@@ -1,76 +1,100 @@
-# Byte-compiled / optimized / DLL files
+# ==========================================
+# Lunar-CV Git Ignore Configuration
+# ==========================================
+
+# --- Python & Bytecode ---
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Virtual Environments
+# --- Virtual Environments ---
 .venv/
-.venv311/
-env/
 venv/
 ENV/
+env/
+env.bak/
+venv.bak/
 
-# Local configuration, secrets, and environment variables
+# --- Secrets, Credentials & Local Config ---
 .env
-.env.*
-*.secret
-*.pem
+.env.local
+.env.*.local
 *.key
+*.pem
+*.cert
+*.secret
+secrets.*
 
-# Temporary files and editor backups
-*.backup_*
-*.tmp
-*.log
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
-
-# Large model weights and checkpoints
-*.pth
-*.pt
-*.ckpt
-checkpoints/
-
-# Local datasets and generated masks
-dataset_masks/
-datasets/
-external_data/
-
-# Generated runtime outputs, predictions, and video demonstrations
+# --- Large Training Runs & Logs (650+ MB) ---
 runs/
-experiments/*/runs/
-video_demonstrations/
-video_presentations/
-predictions/
-prediction_previews/
-prediction_shape_analysis/
-contact_sheets/
-candidate_reviews/
-empty_reference_reviews/
-probability_inspections/
-threshold_analysis/
-validation_evaluations/
-validation_previews/
-validation_visual_reviews/
-annotation_geometry_reports/
-annotation_investigations/
-annotation_pilot/
-annotation_reviews/
-annotation_workspaces/
-dataset_audits/
-dataset_distribution_reports/
-dataset_provenance_reports/
-dataset_source_comparisons/
-space_annotation_reviews/
-project_completion/
+runs/**
+*.log
 
-# Generated experiment analysis and visualization outputs
-checkpoint_comparisons/
-experiments/*/visual_reviews/
-experiments/*/visualizations/
-experiments/*/presentation_figures/
-experiments/validation_error_analysis/
-audit/
-annotation/
+# --- Large Per-Epoch Report Plots (180+ MB) ---
+reports/ultralytics_results/
+
+# --- Heavy Weight Checkpoints ---
+# Ignore all checkpoint weights from runs
+runs/**/weights/
+# Pretrained base weights in weights/ are tracked (or uncomment below to exclude):
+# weights/*.pt
+!weights/*.pt
+!weights/.gitkeep
+!weights/README.md
+
+# --- Raw Dataset Images (~100 MB / 3,800+ files) ---
+# Raw images should be downloaded via Roboflow (see README.md)
+train/images/*
+!train/images/.gitkeep
+valid/images/*
+!valid/images/.gitkeep
+test/images/*
+!test/images/.gitkeep
+
+# Auxiliary raw datasets & generated boulder splits
+boulders/
+boulder_raw/
+
+# --- Temporary & Scratch Files ---
+scratch/
+tmp/
+temp/
+
+# --- IDE & Editor Settings ---
+.vscode/*
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# --- OS-generated Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*

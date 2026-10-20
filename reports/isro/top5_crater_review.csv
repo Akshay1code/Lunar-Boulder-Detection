@@ -1,0 +1,6 @@
+split,image,class_id,class_name,center_x_normalized,center_y_normalized,width_normalized,height_normalized,relative_area,relative_area_percent,review_priority,review_reason,width_pixels,height_pixels
+train,1280_jpg.rf.f18a18b096d4a4c9bbb35ac0e5b34806,0,crater,0.50703125,0.528125,0.9859375,0.94375,0.930479,93.05,HIGH,Covers at least 50% of image,631.0,604.0
+train,1280_jpg.rf.90fe3b106bd721b8234bc5418557d180,0,crater,0.5265625,0.5296875,0.946875,0.940625,0.890654,89.07,HIGH,Covers at least 50% of image,606.0,602.0
+train,Screenshot-2022-02-25-15-03-38_png_jpg.rf.feaa5a009b016bc875752daff1d47d8c,0,crater,0.5,0.51484375,1.0,0.8609375,0.860938,86.09,HIGH,Covers at least 50% of image,640.0,551.0
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.30598ccb9e6a63bcee112a0d5b0b3578,0,crater,0.55546875,0.5,0.8453125,1.0,0.845313,84.53,HIGH,Covers at least 50% of image,541.0,640.0
+train,Screenshot-2022-02-25-15-03-38_png_jpg.rf.e695043607ae553a9a8a82e1b7ab80fa,0,crater,0.50078125,0.515625,0.9984375,0.8375,0.836191,83.62,HIGH,Covers at least 50% of image,639.0,536.0

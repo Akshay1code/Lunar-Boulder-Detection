@@ -1,0 +1,13 @@
+{
+  "images_discovered": 1707,
+  "images_hashed": 1707,
+  "unreadable_images": 0,
+  "exact_duplicate_pairs": 0,
+  "exact_cross_split_pairs": 0,
+  "near_duplicate_candidates": 84,
+  "near_cross_split_candidates": 1,
+  "cross_split_prefix_groups": 110,
+  "perceptual_hash": "64-bit difference hash (dHash)",
+  "candidate_threshold_hamming_distance": 4,
+  "warning": "Similarity candidates require verification. No dataset files were modified."
+}

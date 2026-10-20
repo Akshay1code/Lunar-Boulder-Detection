@@ -1,283 +1,234 @@
-# Lunar Landslide Segmentation Prototype
+# Lunar Computer Vision (Lunar-CV)
 
-College project: **Lunar Terrain Hazard Detection for Safer Exploration**.
-This component demonstrates binary segmentation of candidate regions in lunar
-surface imagery using a lightweight U-Net. It does not certify terrain safety.
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![YOLOv8](https://img.shields.io/badge/YOLO-v8-orange.svg)](https://github.com/ultralytics/ultralytics)
+[![Dataset](https://img.shields.io/badge/dataset-Roboflow%20ISRO-lightgrey.svg)](https://universe.roboflow.com/isro-w900k/craters-boulders)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-green.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-**Reference annotations are unverified rectangular polygons. Scores measure
-agreement with those annotations, not confirmed geological accuracy.**
+An end-to-end computer vision project for detecting craters and rilles on lunar surface imagery using YOLO object detection models.
 
-## Launch the completed demo
+This repository contains the dataset auditing, quality control, and preprocessing pipeline developed to establish dataset integrity, identify source overlap risks, and provide reproducible artifacts for model development and project handoff.
 
-Use the existing Python 3.11 environment; no installation is needed on this laptop:
+---
 
-```powershell
-Set-Location "C:\Dbit project\lunar-landslide-segmentation"
-.\.venv311\Scripts\python.exe -B demo.py
-```
+## Dataset Overview
 
-Open **http://127.0.0.1:8000**. Choose a validation or external lunar image,
-click **Generate prediction**, and inspect the original, binary mask and red
-overlay. The threshold slider defaults to 0.50 and supports 0.20–0.80.
-It reuses the current probability map without rerunning the model.
-Download controls save the native 256×256 mask or the displayed overlay.
-Selecting another image clears the previous result. Stop with Ctrl+C.
+- **Source:** ISRO Craters & Boulders (Roboflow Universe Export, version 1)
+- **License:** CC BY 4.0
+- **Annotation Format:** YOLO darknet format (`<class_id> <x_center> <y_center> <width> <height>`)
+- **Class Mapping:**
+  - `0`: `crater` (3,648 annotations)
+  - `1`: `rille` (3,803 annotations)
+- **Image Resolution:** 640 × 640 pixels (uniform across all splits)
 
-If port 8000 is occupied, use `demo.py --port 8001` and open port 8001 instead.
-The application is a local, single-user Python HTTP application, not Streamlit.
-It binds to localhost, accepts up to 15 MB / 16 million pixels, and keeps
-uploads in memory. Predictions are written only through browser downloads.
-Console diagnostics include image hashes, dimensions and model-score statistics.
-Do not upload test-split images; browser uploads do not retain source paths,
-so the application cannot establish an arbitrary uploaded file's provenance.
+### Verified Structural Counts
 
-The demo loads only:
+| Split | Images | Label Files | Total Annotations | Crater (ID 0) | Rille (ID 1) | Unreadable | Missing Labels |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **Train** | 1,493 | 1,493 | 6,499 | 3,141 (48.33%) | 3,358 (51.67%) | 0 | 0 |
+| **Validation** | 143 | 143 | 636 | 350 (55.03%) | 286 (44.97%) | 0 | 0 |
+| **Test** | 71 | 71 | 316 | 157 (49.68%) | 159 (50.32%) | 0 | 0 |
+| **Total** | **1,707** | **1,707** | **7,451** | **3,648 (48.96%)** | **3,803 (51.04%)** | **0** | **0** |
+
+All 1,707 images and 7,451 annotations pass non-destructive structural checks (0 unreadable images, 0 missing label files, 0 malformed coordinate rows).
+
+---
+
+## Project Structure
 
 ```text
-experiments/experiment_i_rotation/runs/20261018T164118Z_c8c8656b2bf14d69b77b8b02585ef040/best.pth
+Lunar-cv/
+├── assets/
+│   └── samples/                           # Clean lunar test samples for zero-download inference
+├── configs/                               # Dataset & model YAML configurations
+│   ├── data.yaml                          # Baseline 2-class (crater, rille) dataset config
+│   ├── data_merged.yaml                   # 3-class (crater, rille, boulder) dataset config
+│   ├── data_boulder_only.yaml             # Dedicated boulder detection dataset config
+│   ├── data_eval_craters_rilles.yaml      # Crater/rille benchmark evaluation config
+│   └── data_eval_boulders.yaml            # Boulder benchmark evaluation config
+├── src/
+│   ├── preprocessing/                     # Core 7-stage reproducible audit pipeline
+│   │   ├── build_image_manifest.py        # Stage 1: Dataset inventory & manifest
+│   │   ├── dataset_quality_audit.py       # Stage 2: Structural checks & YAML audit
+│   │   ├── bbox_statistics.py             # Stage 3: Bounding-box distribution stats
+│   │   ├── duplicate_audit.py             # Stage 4: Exact (SHA-256) & dHash screening
+│   │   ├── source_overlap_audit.py        # Stage 5: Cross-split SIFT overlap screening
+│   │   ├── generate_visualizations.py     # Stage 6: Annotation rendering & contact sheets
+│   │   └── finalize_audit_report.py       # Stage 7: Report compilation & handoff docs
+│   └── data/                              # Compatibility shims
+├── scripts/
+│   ├── app.py                             # Interactive Tkinter GUI detector
+│   ├── train.py                           # Training pipeline with validation metric tracking
+│   ├── evaluate.py                        # Standalone evaluation & F1-optimal threshold search
+│   ├── merge_boulders.py                  # Boulder dataset merging & re-splitting utility
+│   └── review/                            # Targeted exploratory inspection tools
+├── weights/                               # Pretrained backbones & checkpoints (yolo11n, yolo11s)
+├── train/                                 # Training split (labels tracked; images via Roboflow)
+├── valid/                                 # Validation split (labels tracked; images via Roboflow)
+├── test/                                  # Test split (labels tracked; images via Roboflow)
+├── reports/
+│   └── isro/                              # Quality reports, summaries, and visualization sheets
+├── .env.example                           # Template for optional API keys & environment vars
+├── .gitignore                             # Git exclusion rules (prevents heavy/binary/secret leaks)
+├── requirements.txt                       # Project dependencies
+├── data.yaml                              # Root dataset pointer (Ultralytics default)
+└── README.md                              # Project overview (this file)
 ```
 
-This is Experiment I's best validation checkpoint, update **3,080**, not its
-final checkpoint. `unet_model.py`, the checkpoint, and the inference helper
-modules under `tools/` must remain in their existing locations.
-Alternatively, the `LUNAR_CHECKPOINT_PATH` environment variable can be set to point to `best.pth` if stored at a custom location.
+---
 
-## Dependencies and verification
+## Quickstart: Running the Preprocessing Pipeline
 
-The tested environment is Python 3.11, CPU PyTorch 2.14.1+cpu,
-NumPy 2.4.6, OpenCV 5.0.0 and Pillow 12.3.0. The demo does not require the
-datasets, a GPU, Streamlit or an internet connection.
-For a separate Python 3.11 environment, install the CPU runtime dependencies:
+Run the complete pipeline from the project root in Windows PowerShell using the project virtual environment:
 
 ```powershell
-python -m venv .venv311
-.\.venv311\Scripts\pip.exe install torch --index-url https://download.pytorch.org/whl/cpu
-.\.venv311\Scripts\pip.exe install -r requirements.txt
+# Set Python executable
+$py = ".\.venv\Scripts\python.exe"
+
+# Stage 1: Build image-level inventory manifest
+& $py src/preprocessing/build_image_manifest.py
+
+# Stage 2: Audit dataset quality, coordinate bounds, and YAML mappings
+& $py src/preprocessing/dataset_quality_audit.py
+
+# Stage 3: Compute bounding-box distribution statistics
+& $py src/preprocessing/bbox_statistics.py
+
+# Stage 4: Screen for exact and perceptual near-duplicates (SHA-256 + dHash)
+& $py src/preprocessing/duplicate_audit.py
+
+# Stage 5: Perform cross-split SIFT feature matching and homography screening
+& $py src/preprocessing/source_overlap_audit.py
+
+# Stage 6: Render annotation visualizations and split contact sheets
+& $py src/preprocessing/generate_visualizations.py
+
+# Stage 7: Finalize QC summaries, overlap findings, and handoff documentation
+& $py src/preprocessing/finalize_audit_report.py
 ```
 
-Do not recreate the already working environment before submission. These
-commands are setup guidance, not a guarantee that future package versions
-will reproduce the tested environment. Preserve the existing environment.
+### Running Targeted Review Tools
 
-Run the synthetic checks:
+To inspect specific image pairs or generate targeted contact sheets:
 
 ```powershell
-.\.venv311\Scripts\python.exe -B demo.py --self-test
+# Inspect the top two train-test candidate overlap groups
+& $py scripts/review/inspect_final_train_test.py
+
+# Render SIFT inlier match lines for Screenshot-2022-02-25-16-19-45
+& $py scripts/review/inspect_sift_matches.py
+
+# Inspect the unresolved valid/test pair (valid/4165 vs test/4191)
+& $py scripts/review/review_cross_split_pair.py
 ```
 
-They check HTTP upload, exact checkpoint weights, preprocessing equality,
-mask/overlay encoding, threshold behavior, cache reuse, invalid inputs,
-native-resolution download data and protected-file hashes. They do not
-replace an interactive browser test.
+---
 
-## Dataset and preprocessing
+## Audit Findings & Leakage Status
 
-The existing Moon OHRC Detection v2 export is recorded at:
-`https://universe.roboflow.com/moonohrcdetection/moon_ohrc_detection-zqh88`.
+Our non-destructive audit categorized findings into four clear categories:
 
-Dataset location is configured via the `LUNAR_DATASET_ROOT` environment variable, or by placing the dataset in a `./dataset` folder in the project root:
-```powershell
-$env:LUNAR_DATASET_ROOT = "path\to\moon_ohrc_detection.v2i.coco-segmentation"
-```
+1. **Verified Structural Checks:**
+   - Image readability: 1,707/1,707 readable (0 unreadable).
+   - Label alignment: 1,707 image-label counterparts (0 missing, 0 empty).
+   - Bounding boxes: 7,451 annotations all have finite coordinates within normalized `[0, 1]` bounds and positive widths/heights.
+   - Exact duplicates: 0 byte-identical duplicate pairs found by SHA-256 across all splits.
 
-Reference masks are in `dataset_masks/<split>/`, paired by
-`<image-stem>_mask.png`. `create_masks.py` rasterizes only category 3,
-named `landslide`; the targets do not combine other object categories.
-The original polygons are axis-aligned rectangles. Their geological meaning
-and annotation completeness are not independently established.
+2. **Probable Cross-Split Source Overlap:**
+   - `Screenshot-2022-02-25-15-00-39_png_jpg`: Train and test images share distinctive terrain and craters. SIFT feature matching produced **1,274 good matches** and **1,272 geometric inliers (99.84%)**.
+   - `Screenshot-2022-02-25-15-01-32_png_jpg`: Train and test images share identical crater landmarks. SIFT feature matching produced **1,104 good matches** and **1,104 geometric inliers (100.0%)**.
+   - *Status:* Classified as **probable source overlap**. Requires group-aware split reassignment if strictly independent testing is required.
 
-Training contains 279 images, of which 73 have nonempty masks. Validation
-contains 80 images: 19 nonempty and 61 empty references. The completed
-experiments use the same selected 73 training examples. An empty reference
-does not establish absence of a landslide. No test evaluation is performed
-by this demo or the project-completion checks.
+3. **Inconclusive Candidates:**
+   - `102_png_jpg`, `Screenshot-2022-02-25-14-05-01`, and `Screenshot-2022-02-25-14-12-12` have shared prefixes but weak SIFT match counts (< 10 inliers).
+   - `valid/4165_jpg` vs `test/4191_jpg` share low dHash distance (Hamming distance 2) but remain inconclusive under geometric verification.
+   - *Status:* Retained as documented candidates without modifying files or split assignments.
 
-Preprocessing is unchanged: OpenCV decoding, BGR→RGB, direct
-`INTER_AREA` resize to 256×256, float32 division by 255, then CHW layout.
-There is no additional mean/std normalization or padding. Nonsquare inputs
-are stretched. Masks use nearest-neighbor resizing and binary foreground.
-Inference uses evaluation mode, no gradients, sigmoid, and `p >= threshold`.
-The display restores predictions to the preview dimensions with nearest
-neighbor. Predicted pixel coverage is calculated on the 256×256 output,
-not measured physical area or a calibrated geological probability.
+4. **Checks Not Yet Completed:**
+   - Semantic annotation accuracy (expert lunar domain verification of ambiguous crater vs. boulder/rille boundaries).
+   - Training smoke test with intended YOLO training framework.
 
-## Architecture and completed training
+> [!IMPORTANT]
+> **Dataset Integrity Policy:**
+> - No images or labels were deleted, moved, augmented, or overwritten during this audit.
+> - The train/validation/test split was intentionally kept untouched to preserve experimental baselines.
+> - The dataset is **not** claimed to be completely leakage-free due to the probable source overlap identified above.
 
-`unet_model.py` defines a 482,033-parameter U-Net: three encoder stages
-(16/32/64 channels), a 128-channel bottleneck, skip connections, transposed
-convolution upsampling, and a one-channel logit output. Double-convolution
-blocks use ReLU; the output sigmoid is applied during inference.
+---
 
-Experiment I used seed 42, CPU, Adam 0.001, batch size 2, and 5,180 optimizer
-updates (140 complete passes through 73 images). The loss is mean
-BCEWithLogitsLoss plus mean per-image soft Dice loss, with equal coefficients:
-`1 - (2*sum(sigmoid(logits)*target)+1)/(sum(sigmoid(logits))+sum(target)+1)`.
-Joint random quarter-turn rotations use a separate generator. Validation
-is unaugmented and excluded from gradients. Evaluation occurs at update 0
-and every 140 updates; strictly improving mean Dice on nonempty validation
-references selects the checkpoint, keeping the earlier checkpoint on ties.
+## Key Reports and Artifacts
 
-The transfer experiment used MMLSv2: 465 Martian training pairs and 66
-validation pairs. RGB bands 1–3 were already normalized to 0–1. It pretrained
-for 2,330 updates (10 passes), then reset the optimizer and random generators
-for the same 5,180-update lunar stage. Martian validation data was excluded
-from gradient updates. Missing image georeferencing limits independent
-verification of image-mask alignment despite technical and visual checks.
-See `experiments/mmlsv2_transfer/README.md` and its run reports for provenance.
+- [Preprocessing Pipeline Documentation](src/preprocessing/README.md)
+- [Targeted Review Scripts Guide](scripts/review/README.md)
+- [Dataset Quality Report](reports/isro/dataset_quality_report.md)
+- [Comprehensive Preprocessing Quality Report](reports/isro/dataset_preprocessing_quality_report.md)
+- [Final Dataset Audit Handoff](reports/isro/final_dataset_audit_handoff.md)
+- [Source Overlap Findings](reports/isro/automated_audit/batch_review/source_overlap_findings.md)
+- [Image-Level Manifest](reports/isro/automated_audit/batch_review/image_level_manifest.csv)
+- [Train-Test SIFT Pair Results](reports/isro/automated_audit/batch_review/train_test_sift_pair_results.csv)
+- [Train-Valid SIFT Review](reports/isro/automated_audit/batch_review/train_valid_sift_review.csv)
 
-## Evaluation and results
+---
 
-Binary Dice is `2TP/(2TP+FP+FN)` and IoU is `TP/(TP+FP+FN)`.
-Precision is `TP/(TP+FP)`; recall is `TP/(TP+FN)`.
-Per-image scores are averaged over defined values. Both-empty Dice/IoU,
-precision without predictions, and recall without reference foreground are
-undefined, not automatically perfect. Empty-reference behavior is reported
-separately and is not interpreted as verified geological false positives.
+## Setup & Installation
 
-Same threshold 0.5, same 19 nonempty validation references:
-
-| Approach | Best Dice | Best IoU |
-|---|---:|---:|
-| Lunar-only Experiment I | **0.556983** | **0.418620** |
-| Mars pretraining → lunar fine-tuning | 0.515292 | 0.382620 |
-
-The lunar-only checkpoint remains the demo choice. Transfer did not improve
-overlap in this run, although mean coverage on the 61 empty references
-fell from 63.964% to 3.922% (59 versus 27 images with predictions).
-The comparison uses a historical lunar baseline and one seed; transfer
-receives extra compute. It is not a compute-matched statistical study.
-
-Completed transfer results:
-`experiments/mmlsv2_transfer/runs/20261020T033814Z_continued_86dec9b655f8490e97d0645068464127/`.
-Read `final_report.md`, `comparison.json`, `per_image.csv`, and comparison PNGs.
-Presentation figure:
-`experiments/mmlsv2_transfer/presentation_figures/20261020T091120Z_af4e137143734550aa12b9bdda6c84be/lunar_baseline_vs_mars_transfer.png`.
-
-## Limitations and submission scope
-
-### Known horizon/background failure
-
-Experiment I can predict foreground over black space in horizon images.
-The reproduced D1 example has 65.002441% coverage at threshold 0.5; its
-black top quarter has 99.945% foreground. The model probabilities cause this;
-the existing preprocessing and mask/overlay rendering were checked and match.
-The separate D2 surface example produces 2.899170% coverage.
-
-The demo displays a prominent warning at **40% or greater predicted coverage**.
-This is a chosen UI caution threshold, not a confidence score or a detector
-of incorrect predictions. Results below it are not certified correct.
-A persistent notice explains that horizon/space scenes are not reliably supported.
-Predictions and downloads remain raw and are not silently filtered.
-Darkness, even when connected to an image edge, cannot reliably distinguish
-space from shadowed terrain. No automatic horizon detector or dark-pixel
-removal is enabled. A reliable exclusion mask would require a verified horizon
-or explicit user-reviewed surface boundary, including tests on shadows,
-sloping/curved horizons and terrain-only scenes. Until then, demonstrate
-surface-only examples and disclose this limitation. Low coverage never
-establishes absence of a landslide.
-
-### Optional terrain appearance and connected regions
-
-After predicting an image, expand **Optional visual terrain appearance (not
-geology)**. This is a transparent image-texture heuristic, independent of
-the U-Net: grayscale resized to 256×256, 3×3 Gaussian blur, then Canny edges
-with thresholds 50/100. Edge density below 4% is called relatively
-smooth-looking, 4–<12% textured-looking, and ≥12% highly textured-looking.
-The result is inconclusive if grayscale standard deviation is below 10
-or more than 40% of pixels are at intensities ≤5 or ≥250.
-These chosen thresholds are illustrative, not calibrated or validated.
-Lighting, shadows, image scale, compression and resizing affect the result.
-It does not measure slope/elevation, identify rocks, or assign geological classes.
-
-Connected regions use 8-connectivity on the thresholded 256×256 prediction.
-All regions, including tiny ones, are counted without filtering; the UI shows
-the ten largest sizes in output pixels. These are not physical surface areas
-or verified individual landslides. Changing the threshold changes these counts,
-but not the image-appearance assessment. Small coverage does not establish
-that a landslide is absent. Geological confirmation is unavailable.
-
-### Optional offline video demonstration
-
-To keep the working image-upload server responsive, video processing is a
-separate command, not a browser upload mode. Use a permitted local video;
-do not supply test-split content or renamed copies of it.
+### 1. Clone & Set Up Python Environment
+Clone the repository and set up a Python 3.11 virtual environment:
 
 ```powershell
-Set-Location "C:\Dbit project\lunar-landslide-segmentation"
-.\.venv311\Scripts\python.exe -B tools\demo_video.py "C:\path\to\your\clip.mp4" --fps 0.5 --max-frames 20 --threshold 0.5
+# Clone repository
+git clone https://github.com/<your-username>/Lunar-cv.git
+cd Lunar-cv
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.\.venv\Scripts\Activate.ps1
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-Replace the example path with an actual file. MP4/AVI/MOV/MKV containers are
-accepted, but codec availability depends on installed OpenCV decoders.
-Limits: 100 MiB, 60 seconds, at most 1920×1080 pixels per frame,
-0.1–2 samples/second, and at most 30 processed frames. Defaults sample one
-frame every two seconds, up to 20 frames. A 120-second budget is checked
-between frames; it cannot interrupt a blocking native decoder call.
-Missing timing metadata or an unreadable selected frame causes an explicit
-failure rather than silently skipping it. Seek accuracy depends on the codec;
-requested indices/times and reported decoder positions are recorded.
+### 2. Dataset Download (ISRO Craters & Boulders)
+To train or run full split evaluations, download the ISRO export from Roboflow:
+1. Visit the [ISRO Craters & Boulders Roboflow Universe dataset](https://universe.roboflow.com/isro-w900k/craters-boulders).
+2. Export the dataset in **YOLOv8 PyTorch format**.
+3. Extract the downloaded image files into their corresponding directories:
+   - `train/images/`
+   - `valid/images/`
+   - `test/images/`
 
-The script uses the same Experiment I checkpoint, preprocessing, thresholding
-and overlay logic. Frames are processed individually, not loaded as a whole
-video into RAM. Each run creates a unique `video_demonstrations/<timestamp_uuid>/`
-with original-frame PNGs, 256×256 binary masks, overlays and `report.json`.
-The console shows processed count, threshold, coverage and output location.
-On failure after output creation, partial results remain with an incomplete
-status. Video resources are released in a `finally` block; source/checkpoint
-hashes are checked. Open the PNGs in VS Code or an image viewer.
-There is no claim of real-time operation, motion estimation or geological
-activity detection. The local test used synthetic AVI footage solely to
-verify the code path; real lunar video performance has not been established.
+*(Note: Bounding-box label annotations for all splits are already tracked in `train/labels/`, `valid/labels/`, and `test/labels/`.)*
 
-### Optional MP4 from saved video frames
+---
 
-After `demo_video.py` finishes, copy its printed output directory into:
+## Quickstart: Running Inference
 
+You do not need to download the full dataset to test detection. 17 sample images are included in `assets/samples/`.
+
+### 1. Interactive Desktop GUI Detector
+Launch the GUI application:
 ```powershell
-.\.venv311\Scripts\python.exe -B tools\export_demo_video.py "video_demonstrations/<completed-run-directory>"
+python scripts/app.py
+```
+- Select an image or folder from `assets/samples/`.
+- Adjust confidence threshold and IoU sliders in real time.
+- View per-class counts, bounding boxes, and save annotated outputs.
+
+### 2. Training
+Train a YOLO11 model on the lunar dataset:
+```powershell
+# Baseline 2-class training (crater, rille)
+python scripts/train.py --model yolo11s.pt --epochs 100 --batch 8 --name v2
+
+# 3-class merged training (crater, rille, boulder)
+python scripts/train.py --data configs/data_merged.yaml --model yolo11s.pt --name v3
 ```
 
-Replace `<completed-run-directory>` with the actual directory name. This
-separate utility performs **no inference** and leaves the original PNG workflow
-unchanged. It creates `video_presentations/<timestamp_uuid>/sampled_predictions.mp4`
-and an integrity/export report. Original frames and overlays appear side by side,
-with source timestamps, threshold, coverage and experimental warnings.
-The MP4 is a **slideshow: one second per sampled frame, encoded at 10 fps**.
-It does not reproduce source video timing, estimate motion or demonstrate
-real-time detection. Synthetic inputs are labelled explicitly.
+### 3. Evaluation
+Evaluate model performance and find the F1-optimal confidence threshold:
+```powershell
+python scripts/evaluate.py --weights weights/yolo11s.pt --splits test
+```
 
-The installed OpenCV `mp4v` encoder passed a synthetic export/decode test.
-Playback compatibility varies by player; use the PNGs if MP4 playback fails.
-If encoding is unavailable, the utility reports failure without modifying
-the source frames. Partial export output is marked incomplete.
-
-### Repository structure and Git exclusions
-
-Due to GitHub file size limits and repository hygiene, binary model weights, raw datasets, virtual environments, and generated runtime artifacts are excluded from Git tracking via `.gitignore`:
-- **Model Checkpoints (`*.pth`, `*.pt`, `checkpoints/`)**: Binary trained weights (such as the Experiment I baseline `best.pth`) are kept locally. To run the demo, keep `best.pth` at `experiments/experiment_i_rotation/runs/20261018T164118Z_c8c8656b2bf14d69b77b8b02585ef040/best.pth` or set the `LUNAR_CHECKPOINT_PATH` environment variable to its location.
-- **Virtual Environments (`.venv/`, `.venv311/`)**: Create an isolated environment and install runtime requirements via `pip install -r requirements.txt`.
-- **Raw Image Datasets & Generated Masks (`dataset_masks/`, `datasets/`)**: Stored locally and configured via `LUNAR_DATASET_ROOT`.
-- **Generated Demonstrations and Predictions (`video_demonstrations/`, `predictions/`, `runs/`)**: Created dynamically during runtime inference.
-
-### Final deliverables
-
-- Application: `demo.py`; offline video: `tools/demo_video.py`.
-- Optional MP4 exporter: `tools/export_demo_video.py`.
-- Selected checkpoint: the Experiment I `best.pth` path listed above.
-- Methodology and usage: this `README.md`.
-- Final verification and deliverable index:
-  `project_completion/20261020T144921Z_submission_b24467c73ca64146aad243658f26be77/final_report.md`.
-- Presentation PNG and PDF:
-  `experiments/mmlsv2_transfer/presentation_figures/20261020T091120Z_af4e137143734550aa12b9bdda6c84be/`.
-
-Unverified rectangles, incomplete labels, only 73 annotated training images,
-domain differences and repeated validation use limit scientific conclusions.
-Matching references or visible terrain features does not confirm landslides.
-Predictions can miss references or cover large unrelated-looking regions.
-Performance on arbitrary uploads is unknown; threshold changes trade coverage
-against missed regions without establishing correctness.
-
-This submission delivers a working experimental visualization application,
-completed training comparisons, evaluation artifacts and documented limitations.
-No further training is needed to demonstrate it. Preserve all experiment runs
-and checkpoints; do not use the application to certify exploration safety.

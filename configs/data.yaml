@@ -1,0 +1,15 @@
+
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 2
+names: ['crater', 'rille']
+
+
+roboflow:
+  workspace: isro-w900k
+  project: craters-boulders
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/isro-w900k/craters-boulders/dataset/1

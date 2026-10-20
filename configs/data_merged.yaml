@@ -1,0 +1,6 @@
+path: .
+train: [train/images, boulders/train/images]
+val: [valid/images, boulders/valid/images]
+test: [test/images, boulders/test/images]
+names: ['crater', 'rille', 'boulder']
+nc: 3

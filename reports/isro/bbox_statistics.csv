@@ -1,0 +1,3 @@
+﻿class_id,class_name,valid_box_count,mean_width_normalized,mean_height_normalized,mean_relative_area,mean_width_pixels,mean_height_pixels
+0,crater,3648,0.224015,0.214781,0.069249,143.36938,137.459704
+1,rille,3803,0.337946,0.389987,0.140911,216.285564,249.591507

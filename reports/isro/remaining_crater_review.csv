@@ -1,0 +1,23 @@
+split,image,class_id,class_name,center_x_normalized,center_y_normalized,width_normalized,height_normalized,relative_area,relative_area_percent,review_priority,review_reason,width_pixels,height_pixels
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.7af5b97ffcf45906198b26fee6e44afe,0,crater,0.5,0.56171875,1.0,0.7921875,0.792188,79.22,HIGH,Covers at least 50% of image,640.0,507.0
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.9653826d85a9e9d5fe43c9c875522338,0,crater,0.56328125,0.5,0.7046875,1.0,0.704688,70.47,HIGH,Covers at least 50% of image,451.0,640.0
+train,1280_jpg.rf.088547479cd5efae481d4afae3f46dc6,0,crater,0.52265625,0.5625,0.81484375,0.85546875,0.697073,69.71,HIGH,Covers at least 50% of image,521.5,547.5
+train,Screenshot-2022-02-25-15-00-26_png_jpg.rf.539515400a1ab537ed4507b7eeaa6c05,0,crater,0.5125,0.521875,0.759375,0.9140625,0.694116,69.41,HIGH,Covers at least 50% of image,486.0,585.0
+train,12478_jpg.rf.bde2a117bbf4554af72c774a8e883095,0,crater,0.6046875,0.56796875,0.790625,0.8140625,0.643618,64.36,HIGH,Covers at least 50% of image,506.0,521.0
+train,Screenshot-2022-02-25-15-02-22_png_jpg.rf.98640687e2612c900ed3287523ff750c,0,crater,0.5203125,0.33828125,0.934375,0.6765625,0.632163,63.22,HIGH,Covers at least 50% of image,598.0,433.0
+train,Screenshot-2022-02-25-15-07-38_png_jpg.rf.b15e304f60eed148d37e7670bfcf3720,0,crater,0.43359375,0.58671875,0.7609375,0.8265625,0.628962,62.9,HIGH,Covers at least 50% of image,487.0,529.0
+train,Screenshot-2022-02-25-15-07-38_png_jpg.rf.134ac2f856851e14fb716332a5b04a38,0,crater,0.5875,0.571875,0.825,0.75,0.61875,61.87,HIGH,Covers at least 50% of image,528.0,480.0
+train,Screenshot-2022-02-25-15-00-26_png_jpg.rf.2522b21bf4545b0a8f8646af156ec72e,0,crater,0.51484375,0.51953125,0.6875,0.8828125,0.606934,60.69,HIGH,Covers at least 50% of image,440.0,565.0
+train,Screenshot-2022-02-25-15-03-09_png_jpg.rf.1b935b3ccd011ba2700f70cf66760013,0,crater,0.459375,0.5265625,0.91875,0.65625,0.60293,60.29,HIGH,Covers at least 50% of image,588.0,420.0
+train,Screenshot-2022-02-25-15-02-22_png_jpg.rf.0467b65813cec737c2e847ef1d2c4993,0,crater,0.59609375,0.36796875,0.8078125,0.7359375,0.5945,59.45,HIGH,Covers at least 50% of image,517.0,471.0
+test,6320_jpg.rf.ebb99d1c65b418bb902cdedda41ee916,0,crater,0.5671875,0.5609375,0.8609375,0.68515625,0.589877,58.99,HIGH,Covers at least 50% of image,551.0,438.5
+train,6144_jpg.rf.bf11cf38a63adc481ff97c068bb4e663,0,crater,0.49765625,0.32734375,0.8703125,0.6546875,0.569783,56.98,HIGH,Covers at least 50% of image,557.0,419.0
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.25239e40e8747629719a597793fc3433,0,crater,0.49375,0.56171875,0.9875,0.5765625,0.569355,56.94,HIGH,Covers at least 50% of image,632.0,369.0
+train,13180_jpg.rf.de1dd59ff9affa9db6743d92ce2e9e29,0,crater,0.56796875,0.59140625,0.7140625,0.7921875,0.565671,56.57,HIGH,Covers at least 50% of image,457.0,507.0
+train,12478_jpg.rf.6eaa51d6667cbf814bac58c15873473c,0,crater,0.6140625,0.596875,0.771875,0.715625,0.552373,55.24,HIGH,Covers at least 50% of image,494.0,458.0
+train,Screenshot-2022-02-25-15-07-38_png_jpg.rf.0aa16f6d1e57fb2fe564a3b157be666f,0,crater,0.41328125,0.5875,0.6671875,0.825,0.55043,55.04,HIGH,Covers at least 50% of image,427.0,528.0
+train,6144_jpg.rf.9168d68a6ee713738e50209ad8f2edc2,0,crater,0.46640625,0.31875,0.8421875,0.6375,0.536895,53.69,HIGH,Covers at least 50% of image,539.0,408.0
+train,13180_jpg.rf.a149f4a1fcfa5d59e6eed052f8eb3c1d,0,crater,0.5109375,0.61328125,0.6890625,0.7734375,0.532947,53.29,HIGH,Covers at least 50% of image,441.0,495.0
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.601509f396d67b12996a4ef3b3cb4acb,0,crater,0.5625,0.50859375,0.54296875,0.978125,0.531091,53.11,HIGH,Covers at least 50% of image,347.5,626.0
+train,Screenshot-2022-02-25-15-08-37_png_jpg.rf.b78b58e1099275c46707c9ae1449d53b,0,crater,0.49140625,0.5625,0.978125,0.54296875,0.531091,53.11,HIGH,Covers at least 50% of image,626.0,347.5
+train,Screenshot-2022-02-25-16-09-12_png_jpg.rf.ffb327fe04662f1f1d8199b488656f60,0,crater,0.33359375,0.38125,0.6671875,0.75,0.500391,50.04,HIGH,Covers at least 50% of image,427.0,480.0
