@@ -1,0 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+.venv/
+.venv311/
+env/
+venv/
+ENV/
+
+# Local configuration, secrets, and environment variables
+.env
+.env.*
+*.secret
+*.pem
+*.key
+
+# Temporary files and editor backups
+*.backup_*
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Large model weights and checkpoints
+*.pth
+*.pt
+*.ckpt
+checkpoints/
+
+# Local datasets and generated masks
+dataset_masks/
+datasets/
+external_data/
+
+# Generated runtime outputs, predictions, and video demonstrations
+runs/
+experiments/*/runs/
+video_demonstrations/
+video_presentations/
+predictions/
+prediction_previews/
+prediction_shape_analysis/
+contact_sheets/
+candidate_reviews/
+empty_reference_reviews/
+probability_inspections/
+threshold_analysis/
+validation_evaluations/
+validation_previews/
+validation_visual_reviews/
+annotation_geometry_reports/
+annotation_investigations/
+annotation_pilot/
+annotation_reviews/
+annotation_workspaces/
+dataset_audits/
+dataset_distribution_reports/
+dataset_provenance_reports/
+dataset_source_comparisons/
+space_annotation_reviews/
+project_completion/
+
+# Generated experiment analysis and visualization outputs
+checkpoint_comparisons/
+experiments/*/visual_reviews/
+experiments/*/visualizations/
+experiments/*/presentation_figures/
+experiments/validation_error_analysis/
+audit/
+annotation/

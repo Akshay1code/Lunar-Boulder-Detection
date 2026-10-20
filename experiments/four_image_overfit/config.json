@@ -1,0 +1,132 @@
+{
+  "label": "Training-image fit against unverified rectangular reference masks; not validation performance or geological accuracy",
+  "seed": 42,
+  "device": "cpu",
+  "cpu_threads": 2,
+  "image_size": 256,
+  "batch_size": 1,
+  "initialization": "from_scratch",
+  "model": "UNet",
+  "optimizer": "Adam",
+  "learning_rate": 0.001,
+  "loss": "BCEWithLogitsLoss",
+  "pos_weight": null,
+  "threshold": 0.5,
+  "max_updates": 400,
+  "evaluate_every": 20,
+  "schedule": "fixed_round_robin_config_order",
+  "selected": [
+    {
+      "image_key": "train/ohr_000_patch_0154_png.rf.6d9141dc701bdcaa729c6fc4eef9edac.jpg",
+      "original_split": "train",
+      "coco_image_id": 142,
+      "annotation_ids": [
+        741,
+        742,
+        743
+      ],
+      "landslide_annotation_ids": [
+        743
+      ],
+      "image_path": "C:\\Users\\Dylan Noronha\\Downloads\\moon_ohrc_detection.v2i.coco-segmentation\\train\\ohr_000_patch_0154_png.rf.6d9141dc701bdcaa729c6fc4eef9edac.jpg",
+      "mask_path": "C:\\Dbit project\\lunar-landslide-segmentation\\dataset_masks\\train\\ohr_000_patch_0154_png.rf.6d9141dc701bdcaa729c6fc4eef9edac_mask.png",
+      "image_sha256": "4821e9f0e83239ad6521a150e14fed25c1a8bb67417d19ac47e587a861e9320c",
+      "mask_sha256": "74e25913c67dc0042a51681b6eabf5ae70a7faaa2de1a95a939fc1d0fa36be09",
+      "reference_nonempty": true,
+      "selected_for_training": true,
+      "label_status": "unverified_rectangular_reference",
+      "reference_foreground_coverage_original": 0.333251953125,
+      "reference_foreground_coverage_256": 0.333251953125,
+      "filename": "ohr_000_patch_0154_png.rf.6d9141dc701bdcaa729c6fc4eef9edac.jpg"
+    },
+    {
+      "image_key": "train/ohr_019_patch_2428_png.rf.731671e87d5157f3e99a8b859c0f78db.jpg",
+      "original_split": "train",
+      "coco_image_id": 263,
+      "annotation_ids": [
+        1393,
+        1394,
+        1395,
+        1396,
+        1397,
+        1398,
+        1399,
+        1400,
+        1401,
+        1402,
+        1403,
+        1404
+      ],
+      "landslide_annotation_ids": [
+        1401,
+        1402
+      ],
+      "image_path": "C:\\Users\\Dylan Noronha\\Downloads\\moon_ohrc_detection.v2i.coco-segmentation\\train\\ohr_019_patch_2428_png.rf.731671e87d5157f3e99a8b859c0f78db.jpg",
+      "mask_path": "C:\\Dbit project\\lunar-landslide-segmentation\\dataset_masks\\train\\ohr_019_patch_2428_png.rf.731671e87d5157f3e99a8b859c0f78db_mask.png",
+      "image_sha256": "60c08cce1af5d8c96102c3a6984df117b95a96ef43f2c331e53b51d03de77e5c",
+      "mask_sha256": "8e063ceb1b2ae983789b9ec74098651458bcba6af581716b4ace2b8e21c17e4b",
+      "reference_nonempty": true,
+      "selected_for_training": true,
+      "label_status": "unverified_rectangular_reference",
+      "reference_foreground_coverage_original": 0.02753173828125,
+      "reference_foreground_coverage_256": 0.02728271484375,
+      "filename": "ohr_019_patch_2428_png.rf.731671e87d5157f3e99a8b859c0f78db.jpg"
+    },
+    {
+      "image_key": "train/ohr_001_patch_1715_png.rf.9723a06f2ed11acf2ec84f2df2532410.jpg",
+      "original_split": "train",
+      "coco_image_id": 245,
+      "annotation_ids": [
+        1294,
+        1295,
+        1296,
+        1297,
+        1298
+      ],
+      "landslide_annotation_ids": [
+        1294
+      ],
+      "image_path": "C:\\Users\\Dylan Noronha\\Downloads\\moon_ohrc_detection.v2i.coco-segmentation\\train\\ohr_001_patch_1715_png.rf.9723a06f2ed11acf2ec84f2df2532410.jpg",
+      "mask_path": "C:\\Dbit project\\lunar-landslide-segmentation\\dataset_masks\\train\\ohr_001_patch_1715_png.rf.9723a06f2ed11acf2ec84f2df2532410_mask.png",
+      "image_sha256": "007d7814f677cf0f1e40de22973c22acd93f215548dc932e93142e2fb71e6820",
+      "mask_sha256": "6f710f839e12e9553fbf644b0fa46b3a0faacc310e2c74c053f8e04db2388fcf",
+      "reference_nonempty": true,
+      "selected_for_training": true,
+      "label_status": "unverified_rectangular_reference",
+      "reference_foreground_coverage_original": 0.133095703125,
+      "reference_foreground_coverage_256": 0.13336181640625,
+      "filename": "ohr_001_patch_1715_png.rf.9723a06f2ed11acf2ec84f2df2532410.jpg"
+    },
+    {
+      "image_key": "train/ohr_006_patch_1816_png.rf.92a1a565315147ef762508fc73af4d72.jpg",
+      "original_split": "train",
+      "coco_image_id": 96,
+      "annotation_ids": [
+        454,
+        455,
+        456,
+        457,
+        458,
+        459
+      ],
+      "landslide_annotation_ids": [
+        454,
+        455,
+        456,
+        457,
+        458,
+        459
+      ],
+      "image_path": "C:\\Users\\Dylan Noronha\\Downloads\\moon_ohrc_detection.v2i.coco-segmentation\\train\\ohr_006_patch_1816_png.rf.92a1a565315147ef762508fc73af4d72.jpg",
+      "mask_path": "C:\\Dbit project\\lunar-landslide-segmentation\\dataset_masks\\train\\ohr_006_patch_1816_png.rf.92a1a565315147ef762508fc73af4d72_mask.png",
+      "image_sha256": "9afa999504a4a822694586061f6bedd2219130f27c597f2e0bb609b2bd6e32bb",
+      "mask_sha256": "a1242e725318305c6363b856d4ec75f3a5c4e0d97bb2dba8cc277d9f6cfa4ac8",
+      "reference_nonempty": true,
+      "selected_for_training": true,
+      "label_status": "unverified_rectangular_reference",
+      "reference_foreground_coverage_original": 0.52968994140625,
+      "reference_foreground_coverage_256": 0.5301361083984375,
+      "filename": "ohr_006_patch_1816_png.rf.92a1a565315147ef762508fc73af4d72.jpg"
+    }
+  ]
+}
