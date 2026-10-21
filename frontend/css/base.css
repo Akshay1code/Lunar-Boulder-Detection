@@ -1,0 +1,125 @@
+/* ==========================================================================
+   BASE & RESET — LUNAR MISSION DESIGN SYSTEM
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--bg-0);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-0);
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(143, 184, 232, 0.06), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 85% 100%, rgba(52, 211, 153, 0.03), transparent 70%);
+  background-attachment: fixed;
+  color: var(--text-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography Primitives ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--text-3xl); font-weight: 400; }
+h2 { font-size: var(--text-2xl); font-weight: 500; }
+h3 { font-size: var(--text-xl); font-weight: 500; }
+
+p {
+  color: var(--text-2);
+  font-size: var(--text-base);
+}
+
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--text-1); }
+
+/* ─── Focus States & Accessibility ─── */
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ─── Layout Primitives ─── */
+.app-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--space-6) 0 var(--space-8);
+  position: relative;
+  min-width: 0;
+}
+
+/* ─── Mission Step Container ─── */
+.step-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+
+.step-panel.is-hidden {
+  display: none !important;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+/* ─── Scrollbars ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-0);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

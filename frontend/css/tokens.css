@@ -1,0 +1,85 @@
+/* ==========================================================================
+   DESIGN TOKENS — LUNAR MISSION DESIGN SYSTEM
+   ========================================================================== */
+:root {
+  /* ─── Color Palette ─── */
+  --bg-0: #050608;          /* Base background */
+  --bg-1: #0B0D12;          /* Secondary container / page background */
+  --surface-1: #12151C;     /* Standard card background */
+  --surface-2: #1A1E27;     /* Elevated surfaces / interactive cards */
+  --surface-3: #222834;     /* Floating badges / tooltips / inputs */
+
+  --text-1: #F5F5F7;        /* High-contrast primary text */
+  --text-2: #A6ABB5;        /* Secondary supporting text */
+  --text-muted: #6B7280;    /* Captions / metadata / labels */
+
+  --border: #303640;        /* Subtle divider & card borders */
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(230, 233, 239, 0.4);
+
+  --accent: #E6E9EF;        /* Silver-white primary accent */
+  --accent-2: #8FB8E8;      /* Restrained icy blue secondary accent */
+  --accent-glow: rgba(143, 184, 232, 0.12);
+
+  /* Status Colors (strictly reserved for status) */
+  --success: #34D399;       /* Emerald accepted / verified */
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --success-border: rgba(52, 211, 153, 0.35);
+
+  --warning: #FBBF24;       /* Amber ambiguous / needs review */
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --warning-border: rgba(251, 191, 36, 0.35);
+
+  --danger: #F87171;        /* Red rejected / non-lunar */
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --danger-border: rgba(248, 113, 113, 0.35);
+
+  /* ─── Typography ─── */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Fluid type scale via clamp */
+  --text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.8rem);
+  --text-sm: clamp(0.82rem, 0.8rem + 0.15vw, 0.92rem);
+  --text-base: clamp(0.95rem, 0.92rem + 0.2vw, 1.05rem);
+  --text-lg: clamp(1.15rem, 1.1rem + 0.3vw, 1.3rem);
+  --text-xl: clamp(1.4rem, 1.3rem + 0.5vw, 1.7rem);
+  --text-2xl: clamp(1.8rem, 1.6rem + 1vw, 2.4rem);
+  --text-3xl: clamp(2.2rem, 1.9rem + 1.5vw, 3.2rem);
+
+  /* ─── Spacing scale ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ─── Radii ─── */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  --shadow-glow: 0 0 40px rgba(143, 184, 232, 0.15);
+
+  /* ─── Motion ─── */
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 450ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ─── Z-index layers ─── */
+  --z-base: 1;
+  --z-nav: 50;
+  --z-modal: 100;
+  --z-overlay: 200;
+}

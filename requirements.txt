@@ -13,5 +13,9 @@ numpy>=1.24.0
 matplotlib>=3.7.0
 pyyaml>=6.0
 
+# Web application backend
+flask>=3.0.0
+werkzeug>=3.0.0
+
 # Utilities
 requests>=2.31.0

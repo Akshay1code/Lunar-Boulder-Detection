@@ -1,0 +1,139 @@
+/* ==========================================================================
+   ANIMATIONS & SCENE — LUNAR MISSION DESIGN SYSTEM
+   ========================================================================== */
+
+/* ─── Mission Orbital Scene ─── */
+.mission-scene-wrapper {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #0d111a 0%, #050608 100%);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-4) 0;
+}
+
+.scene-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.scene-elements {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Earth Sphere */
+.scene-earth {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #8FB8E8 0%, #3B82F6 45%, #1D4ED8 75%, #0B192C 100%);
+  box-shadow: 0 0 35px rgba(143, 184, 232, 0.4), inset -6px -6px 14px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 2;
+  animation: earthSpin 45s linear infinite;
+}
+
+/* Orbit Path */
+.scene-orbit {
+  position: absolute;
+  width: 210px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1px dashed rgba(143, 184, 232, 0.25);
+  transform: rotate(-20deg);
+  z-index: 1;
+}
+
+/* Moon Sphere traversing orbit */
+.scene-moon-pivot {
+  position: absolute;
+  width: 210px;
+  height: 110px;
+  transform: rotate(-20deg);
+  animation: orbitRotate 16s linear infinite;
+  pointer-events: none;
+}
+
+.scene-moon {
+  position: absolute;
+  top: -12px;
+  left: 93px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #F5F5F7 0%, #A6ABB5 50%, #4B5563 100%);
+  box-shadow: 0 0 16px rgba(245, 245, 247, 0.6), inset -2px -2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.scene-caption {
+  position: absolute;
+  bottom: 16px;
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(5, 6, 8, 0.7);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  backdrop-filter: blur(8px);
+}
+
+/* ─── Keyframe Animations ─── */
+@keyframes orbitRotate {
+  0% { transform: rotate(-20deg) rotate(0deg); }
+  100% { transform: rotate(-20deg) rotate(360deg); }
+}
+
+@keyframes earthSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.04); }
+}
+
+@keyframes spinIndeterminate {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent-2);
+  border-radius: 50%;
+  animation: spinIndeterminate 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* ─── Reduced Motion Overrides ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scene-earth,
+  .scene-moon-pivot {
+    animation: none !important;
+  }
+}

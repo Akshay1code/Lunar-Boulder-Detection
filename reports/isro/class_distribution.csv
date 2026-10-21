@@ -1,7 +1,0 @@
-﻿split,class_id,class_name,annotation_count,percentage
-train,0,crater,3141,48.33
-train,1,rille,3358,51.67
-valid,0,crater,350,55.03
-valid,1,rille,286,44.97
-test,0,crater,157,49.68
-test,1,rille,159,50.32

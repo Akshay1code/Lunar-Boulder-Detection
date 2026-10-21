@@ -1,6 +1,0 @@
-path: .
-train: train/images
-val: test/images
-test: test/images
-names: ['crater', 'rille', 'boulder']
-nc: 3

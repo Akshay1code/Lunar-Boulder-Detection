@@ -1,0 +1,434 @@
+/* ==========================================================================
+   COMPONENTS — LUNAR MISSION DESIGN SYSTEM
+   ========================================================================== */
+
+/* ─── Header & Mission Status Bar ─── */
+.site-header {
+  border-bottom: 1px solid var(--border-light);
+  background: rgba(5, 6, 8, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand-crest {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.brand-text h1 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.status-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--text-muted);
+}
+.status-beacon.is-online {
+  background: var(--success);
+  box-shadow: 0 0 10px var(--success);
+}
+.status-beacon.is-partial {
+  background: var(--warning);
+  box-shadow: 0 0 10px var(--warning);
+}
+.status-beacon.is-offline {
+  background: var(--danger);
+  box-shadow: 0 0 10px var(--danger);
+}
+
+/* ─── Mission Stepper ─── */
+.mission-stepper-nav {
+  margin: var(--space-4) 0 var(--space-6);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.stepper-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: var(--space-2);
+  min-width: max-content;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.step-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-family: inherit;
+  cursor: default;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.step-btn.is-clickable {
+  cursor: pointer;
+  color: var(--text-2);
+}
+.step-btn.is-clickable:hover {
+  background: var(--surface-1);
+  color: var(--text-1);
+  border-color: var(--border-light);
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.step-btn[aria-current="step"] {
+  background: var(--surface-2);
+  color: var(--text-1);
+  border-color: var(--border);
+  box-shadow: 0 0 20px rgba(143, 184, 232, 0.08);
+}
+.step-btn[aria-current="step"] .step-num {
+  background: var(--accent);
+  color: var(--bg-0);
+  font-weight: 700;
+}
+
+.step-divider {
+  width: 16px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── Cards & Surfaces ─── */
+.mission-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.mission-card.is-elevated {
+  background: var(--surface-2);
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  min-height: 46px;
+  min-width: 46px;
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-0);
+  border-color: var(--accent);
+}
+.btn-primary:hover {
+  background: #FFFFFF;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text-1);
+  border-color: var(--border);
+}
+.btn-secondary:hover {
+  background: var(--surface-3);
+  border-color: var(--accent-2);
+  color: #FFFFFF;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border);
+}
+.btn-outline:hover {
+  background: var(--surface-1);
+  color: var(--text-1);
+  border-color: var(--border-focus);
+}
+
+.btn-danger-outline {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.btn-danger-outline:hover {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+
+/* ─── Dropzone (Step 1) ─── */
+.dropzone-container {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  background: rgba(18, 21, 28, 0.5);
+  transition: all var(--dur-base) var(--ease-out);
+  position: relative;
+}
+
+.dropzone-container:hover,
+.dropzone-container.is-dragover {
+  border-color: var(--accent-2);
+  background: rgba(143, 184, 232, 0.05);
+  box-shadow: var(--shadow-glow);
+}
+
+.dropzone-crest {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-2);
+}
+
+.dropzone-title {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+}
+
+.dropzone-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-5);
+}
+
+/* ─── Preview & Lunar Frame (Step 2 & 6) ─── */
+.lunar-frame {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.lunar-frame img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  display: block;
+}
+
+.lunar-reticle-tl, .lunar-reticle-tr, .lunar-reticle-bl, .lunar-reticle-br {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--accent-2);
+  pointer-events: none;
+  opacity: 0.6;
+}
+.lunar-reticle-tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+.lunar-reticle-tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+.lunar-reticle-bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+.lunar-reticle-br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* ─── Model Selection Cards (Step 4) ─── */
+.radiogroup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-5);
+}
+
+.model-choice-card {
+  position: relative;
+  background: var(--surface-1);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  cursor: pointer;
+  transition: all var(--dur-base) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+
+.model-choice-card:hover:not(.is-disabled) {
+  border-color: var(--border-focus);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+
+.model-choice-card.is-selected {
+  border-color: var(--accent-2);
+  background: var(--surface-2);
+  box-shadow: 0 0 30px rgba(143, 184, 232, 0.12);
+}
+
+.model-choice-card.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+}
+
+.model-badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+  width: fit-content;
+}
+.model-badge.badge-yolo {
+  background: rgba(143, 184, 232, 0.15);
+  color: var(--accent-2);
+}
+.model-badge.badge-unet {
+  background: rgba(192, 132, 252, 0.15);
+  color: #C084FC;
+}
+
+/* ─── Validation & Mission Status (Step 3) ─── */
+.status-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.status-card.state-accepted {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+}
+.status-card.state-ambiguous {
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
+}
+.status-card.state-rejected {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.checks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.checks-table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* ─── Results Detections Table (Step 6) ─── */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin-top: var(--space-3);
+}
+.results-table th,
+.results-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+.results-table th {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Comparison Container (Side-by-side / Grid) ─── */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}

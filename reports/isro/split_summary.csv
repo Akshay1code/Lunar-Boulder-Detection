@@ -1,4 +1,0 @@
-﻿split,images,label_files,annotations_with_valid_class_id,missing_label_files,empty_label_files,labels_without_images,unreadable_images
-train,1493,1493,6499,0,0,0,0
-valid,143,143,636,0,0,0,0
-test,71,71,316,0,0,0,0
